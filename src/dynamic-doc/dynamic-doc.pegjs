@@ -60,7 +60,7 @@ codeblock
   = "'''" tilEOL? EOL block: (!"'''" .)* _ "'''" { return block.map(b => b[1]).join('') }
 
 property
-  = _ label:word _ optional:"?"? _ ":" _ type: ($unionType / $type) {
+  = _ label:word _ optional:"?"? _ ":" _ type: ($genericType / $unionType / $type) {
     return {
       label,
       optional: !!optional,
@@ -70,6 +70,7 @@ property
 
 type "type"
   = array
+  / genericType
   / namespacedWord
   / function
   / primitiveType
@@ -78,7 +79,9 @@ type "type"
   / word
 
 function "function"
-  = "(" _ property _ ("," _ property)* _ ")" _ "=>" _ type
+  = "(" _ property _ ("," _ property)* _ ")" _ "=>" _ "("? _ type _ ("|" _ _t:type)* _ ")"?
+  / "()"  _ "=>" _ "("? _ type _ ("|" _ _t:type)* _ ")"?
+
 
 namespacedWord "namespaced type"
  = word "." word
@@ -88,13 +91,17 @@ array "array"
   / primitiveType _ "[]"+
   / "(" _ unionType _ ")" _ "[]"+
 
+genericType "generic type"
+  = (namespacedWord / word) _ "<" _ type _ ">"
+
 unionType "union type"
-  = t:type _ ts:("|" _ _t:type {return _t})+ {return [t, ...ts].join(' | ')}
+  = type _ ("|" _ _t:type)+
 
 primitiveType "primitive type"
   = "string"
   / "number"
   / "boolean"
+  / "void"
   / "any"
 
 word
