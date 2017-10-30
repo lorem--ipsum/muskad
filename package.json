@@ -1,0 +1,40 @@
+{
+  "name": "muskad",
+  "version": "0.0.1",
+  "description": "A TSX doc generator",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "compile-grammar": "pegjs -o dist/dynamic-doc/dynamic-doc-parser.js src/dynamic-doc/dynamic-doc.pegjs",
+    "compile": "npm run clean && tsc && npm run compile-grammar",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "dist/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lorem--ipsum/muskad.git"
+  },
+  "keywords": [
+    "tsx",
+    "documentation"
+  ],
+  "author": "lorem--ipsum",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/lorem--ipsum/muskad/issues"
+  },
+  "homepage": "https://github.com/lorem--ipsum/muskad#readme",
+  "dependencies": {
+    "fs-extra": "~4.0.1",
+    "immutable-class": "~0.6.39"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "~4.0.1",
+    "pegjs": "^0.10.0",
+    "tslib": "~1.7.1",
+    "typescript": "~2.4.2"
+  }
+}
