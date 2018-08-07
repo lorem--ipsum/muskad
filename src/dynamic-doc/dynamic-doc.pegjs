@@ -79,9 +79,13 @@ type "type"
   / word
 
 function "function"
-  = "(" _ property _ ("," _ property)* _ ")" _ "=>" _ "("? _ type _ ("|" _ _t:type)* _ ")"?
-  / "()"  _ "=>" _ "("? _ type _ ("|" _ _t:type)* _ ")"?
+  = "(" _ property _ ("," _ property)* _ ")" _ "=>" _ returnType
+  / "()"  _ "=>" _ returnType
 
+returnType
+  = type
+  / "(" _ type ( _ "|" _ type)+ _ ")"
+  / type ( _ "|" _ type)+
 
 namespacedWord "namespaced type"
  = word "." word
@@ -116,4 +120,3 @@ s "whitespace+"
 
 _ "whitespace*"
   = s:[ \t\n\r]* {return ''}
-
