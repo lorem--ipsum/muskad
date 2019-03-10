@@ -14,17 +14,24 @@ class MuskadPlugin {
 
         const content = await fs.readFile(filePath);
 
+        const interfaces = DynamicDoc.interfacesFromFileContent(String(content));
+
+        if (!interfaces || !interfaces.length) return null;
+
         return DynamicDoc.fromJS({
           componentName: path.basename(filePath, ext),
           fileName: path.basename(filePath, ext),
-          interfaces: DynamicDoc.interfacesFromFileContent(String(content))
+          interfaces
         });
-      }).filter(Boolean);
+      });
 
       Promise.all(promises)
         .then(result => {
           const m: any = {};
-          result.forEach(r => m[r.componentName] = r)
+          result.forEach(r => {
+            if (!r) return;
+            m[r.componentName] = r
+          });
 
           const content = JSON.stringify(m);
 
