@@ -21,6 +21,7 @@
   "include": [
   ],
   "files": [
-    "src/index.ts"
+    "src/index.ts",
+    "src/webpack-plugin/muskad.ts"
   ]
 }

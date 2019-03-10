@@ -5,9 +5,6 @@
  * of Imply Data, Inc.
  */
 
-import * as path from 'path';
-import * as fs from 'fs-extra';
-
 const parser = require('./dynamic-doc-parser');
 
 import { BaseImmutable, Property as ImmutableProperty, PropertyType as ImmutablePropertyType } from 'immutable-class';
@@ -25,34 +22,20 @@ export interface DynamicDocJS {
   interfaces: InterfaceApiJS[];
 }
 
-function interfacesFromFileContent(fileContent: string, filePath: string): InterfaceApi[] {
-  try {
-    return parser.parse(fileContent).map(InterfaceApi.fromJS);
-  } catch(e) {
-    console.error('Could not parse dynamic doc for file ' + filePath);
-
-    if (e.location) {
-      const lines = fileContent.split('\n');
-      console.error(lines.slice(e.location.start.line -1 , e.location.end.line + 1).join('\n'));
-    }
-
-    throw(e);
-  }
-}
-
 export class DynamicDoc extends BaseImmutable<DynamicDocValue, DynamicDocJS> {
+  static interfacesFromFileContent(fileContent: string): InterfaceApi[] {
+    try {
+      return parser.parse(fileContent).map(InterfaceApi.fromJS);
+    } catch(e) {
+      console.error('Could not parse dynamic doc for file:\n' + fileContent);
 
-  static async fromFile(filePath: string) {
-    const componentName = path.dirname(filePath);
-    const fileName = path.basename(filePath, '.tsx');
+      if (e.location) {
+        const lines = fileContent.split('\n');
+        console.error(lines.slice(e.location.start.line -1 , e.location.end.line + 1).join('\n'));
+      }
 
-    const fileContent = await fs.readFile(filePath);
-
-    return new DynamicDoc({
-      componentName,
-      fileName,
-      interfaces: interfacesFromFileContent(String(fileContent), filePath)
-    });
+      throw(e);
+    }
   }
 
   static isDynamicDoc(candidate: any): candidate is DynamicDoc {
