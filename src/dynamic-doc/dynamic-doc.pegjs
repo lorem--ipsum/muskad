@@ -4,7 +4,7 @@ start
   = $(!interfaceDocOpeningTag .)* ints:(int:interface $(!interfaceDocOpeningTag .)* { return int })* { return ints }
 
 interface
-  = label:interfaceDocOpeningTag _ name:interfaceSignature properties:interfaceDeclaration interfaceEnd { return {label: label || name, properties} }
+  = label:interfaceDocOpeningTag _ name:interfaceSignature properties:interfaceDeclaration interfaceEnd { return {label: label || name, name, properties} }
 
 interfaceSignature
   = "export" _ "interface" _ name:word _ tilEOL { return name }

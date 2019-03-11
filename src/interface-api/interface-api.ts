@@ -10,12 +10,16 @@ import { Property, PropertyJS, PropertyValue } from '../property/property';
 
 export interface InterfaceApiValue {
   label: string;
+  name: string;
   properties: PropertyValue[];
+  fileName?: string;
 }
 
 export interface InterfaceApiJS {
   label: string;
+  name: string;
   properties: PropertyJS[];
+  fileName?: string;
 }
 
 export class InterfaceApi extends BaseImmutable<InterfaceApiValue, InterfaceApiJS> {
@@ -26,6 +30,8 @@ export class InterfaceApi extends BaseImmutable<InterfaceApiValue, InterfaceApiJ
 
   static PROPERTIES: ImmutableProperty[] = [
     { name: 'label' },
+    { name: 'name' },
+    { name: 'fileName', defaultValue: null },
     { name: 'properties', immutableClassArray: Property, type: ImmutablePropertyType.ARRAY },
   ];
 
@@ -34,6 +40,8 @@ export class InterfaceApi extends BaseImmutable<InterfaceApiValue, InterfaceApiJ
   }
 
   public label: string;
+  public fileName: string;
+  public name: string;
   public properties: Property[];
 
   constructor(parameters: InterfaceApiValue) {
