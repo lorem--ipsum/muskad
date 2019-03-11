@@ -25,7 +25,7 @@ export class PropertyDescription extends BaseImmutable<PropertyDescriptionValue,
   }
 
   static PROPERTIES: Property[] = [
-    { name: 'content', defaultValue: '<i> no description </i>' },
+    { name: 'content', defaultValue: null },
     { name: 'examples', immutableClassArray: PropertyUsage, type: PropertyType.ARRAY, emptyArrayIsOk: true }
   ];
 
