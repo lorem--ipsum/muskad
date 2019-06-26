@@ -1,6 +1,6 @@
 {
   "name": "muskad",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "A TSX doc generator",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
