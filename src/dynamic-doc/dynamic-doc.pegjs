@@ -79,7 +79,7 @@ type "type"
   / word
 
 function "function"
-  = "(" _ property _ ("," _ property)* _ ")" _ "=>" _ returnType
+  = "(" _ property _ ("," _ property)* _ ','* _ ")" _ "=>" _ returnType
   / "()"  _ "=>" _ returnType
 
 returnType
